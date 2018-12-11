@@ -4,9 +4,9 @@
 <img src="https://media.giphy.com/media/26Fff0ZKP893tSJ5m/giphy.gif" />
 </p>
 
-Stepper for Vue.
+Stepper for Vue with programatic navigation.
 
-A simple stepper with simple actions such as next, back and finish to perform simple forms.
+This is a fork version of a simple Vue Stepper with the added capability to navigate backwards and forward by emitting the corresponding event from within a child component inside the stepper
 
 <a href="https://pygmyslowloris.github.io/vue-stepper/"> Live Demo</a>
 
@@ -54,6 +54,8 @@ npm install vue-stepper --save
 | :---------------      | :-------  |
 |  `can-continue`           | By default the *next button* will be disabled until the event `can-continue` is triggered with an object containing the property `value`. `Value` accepts a boolean, if `true` next/finish button will be enabled if false disabled. On each next step `canContinue` variable will be set to false.|
 |  `change-next`           | With this event you can change de state of the `clickedNext` prop that each step has. Just emit it with the following payload `{nextBtnValue: boolean}` |
+|  `next`                  | With this event you can cause the stepper to go one step forward from within a child component |
+|  `previous`                  | With this event you can cause the stepper to go one step backwards from within a child component |
 
 ## Exposed props for step component
 | Properties            | Type      | Values     |
