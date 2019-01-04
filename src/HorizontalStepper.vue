@@ -11,8 +11,8 @@
                 <template v-for="(step, index) in steps">
                     <div :class="['step', isStepActive(index, step)]" :key="index" :style="{width: `${100 / steps.length}%`}">
                         <div class="circle">
-                            <i class="material-icons md-18">
-                                {{ (step.completed) ? 'done' : step.icon }}
+                            <i :class="step.completed ? (step.wrapperDoneClass || '') : (step.wrapperClass || 'material-icons md-18')">
+                                {{ (step.completed) ? step.completedIcon : step.icon }}
                             </i>
                         </div>
                         <div class="step-title">
