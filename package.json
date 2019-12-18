@@ -1,6 +1,6 @@
 {
   "name": "vue-stepper-improved",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "Vue Stepper Improved",
   "main": "src/index.js",
   "repository": {
@@ -54,6 +54,7 @@
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.16",
+    "automatic-semantic-release": "0.0.10",
     "babel-core": "^6.26.3",
     "babel-jest": "^22.4.4",
     "babel-loader": "^6.0.0",
@@ -75,5 +76,13 @@
     "webpack": "^2.7.0",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^2.11.2"
+  },
+  "release": {
+    "branch": "master"
+  },
+  "gitHooks": {
+    "commit-msg": "./node_modules/automatic-semantic-release/scripts/check-msg.sh",
+    "post-commit": "./node_modules/automatic-semantic-release/scripts/release.sh",
+    "pre-push": "./node_modules/automatic-semantic-release/scripts/push-release.sh"
   }
 }

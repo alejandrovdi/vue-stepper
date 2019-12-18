@@ -30,10 +30,10 @@
             <transition :enter-active-class="enterAnimation" :leave-active-class="leaveAnimation" mode="out-in">
                 <!--If keep alive-->
                 <keep-alive v-if="keepAliveData">
-                    <component :is="steps[currentStep.index].component" :clickedNext="nextButton[currentStep.name]" @previous="backStep()" @next="nextStep()" @can-continue="proceed" @change-next="changeNextBtnValue" :current-step="currentStep"></component>
+                    <component :is="steps[currentStep.index].component" :clickedNext="nextButton[currentStep.name]" @previous="backStep" @next="nextStep" @can-continue="proceed" @change-next="changeNextBtnValue" :current-step="currentStep"></component>
                 </keep-alive>
                 <!--If not show component and destroy it in each step change-->
-                <component v-else :is="steps[currentStep.index].component" :clickedNext="nextButton[currentStep.name]" @previous="backStep()" @next="nextStep()" @can-continue="proceed" @change-next="changeNextBtnValue" :current-step="currentStep"></component>
+                <component v-else :is="steps[currentStep.index].component" :clickedNext="nextButton[currentStep.name]" @previous="backStep" @next="nextStep" @can-continue="proceed" @change-next="changeNextBtnValue" :current-step="currentStep"></component>
             </transition>
         </div>
         <div :class="['bottom', (currentStep.index > 0) ? '' : 'only-next']">
@@ -139,7 +139,8 @@ export default {
         this.previousStep = this.currentStep;
         this.currentStep = {
           name: this.steps[index].name,
-          index: index
+          index: index,
+          data: this.steps[index].data,
         };
 
         if (index + 1 === this.steps.length) {
@@ -155,7 +156,10 @@ export default {
       this.$emit("active-step", this.currentStep);
     },
 
-    nextStepAction() {
+    nextStepAction(data) {
+      if (data !== undefined) {
+        this.$emit("step-data", data);
+      }
       this.nextButton[this.currentStep.name] = true;
       if (this.canContinue) {
         if (this.finalStep) {
@@ -169,10 +173,10 @@ export default {
       this.$forceUpdate();
     },
 
-    nextStep () {
+    nextStep (data) {
 
       if (!this.$listeners || !this.$listeners['before-next-step']) {
-        this.nextStepAction()
+        this.nextStepAction(data)
       }
 
       this.canContinue = false;
@@ -180,7 +184,7 @@ export default {
       this.$emit("before-next-step", { currentStep: this.currentStep }, (next = true) => {
         this.canContinue = true;
         if (next) {
-          this.nextStepAction()
+          this.nextStepAction(data)
         }
       });
     },
